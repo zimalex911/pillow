@@ -1,15 +1,15 @@
 :root {
-  --bg: #f8f9ff;
-  --ink: #16223b;
-  --muted: #6d7ba6;
-  --accent: #7aa8ff;
-  --accent-2: #c4d8ff;
-  --glass: rgba(255, 255, 255, 0.6);
-  --shadow: 0 18px 60px rgba(22, 34, 59, 0.18);
+  --bg: radial-gradient(circle at 25% 20%, #0f1f46 0%, #0a1630 35%, #060d1f 100%);
+  --ink: #e8edff;
+  --muted: #9fb3ff;
+  --accent: #4fd1ff;
+  --accent-2: #7c8bff;
+  --glass: rgba(14, 25, 53, 0.55);
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
   --radius: 18px;
   --frame-width: min(520px, 90vw);
   --char-size: 74px;
-  --focus-size: clamp(260px, 56vw, 340px);
+  --focus-size: clamp(280px, 60vw, 360px);
 }
 
 * {
@@ -19,7 +19,7 @@
 body {
   margin: 0;
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  background: radial-gradient(circle at 30% 20%, #e7edff, #f9fbff 55%);
+  background: var(--bg);
   color: var(--ink);
   display: flex;
   justify-content: center;
@@ -45,6 +45,7 @@ body {
 .topbar h1 {
   margin: 6px 0 4px;
   font-size: 28px;
+  color: #f7fbff;
 }
 
 .sub {
@@ -58,7 +59,7 @@ body {
   letter-spacing: 0.16em;
   font-weight: 700;
   font-size: 11px;
-  color: #5f7bcf;
+  color: var(--accent);
 }
 
 .toggles {
@@ -79,11 +80,11 @@ body {
   gap: 8px;
   padding: 10px 14px;
   border-radius: 12px;
-  background: white;
-  box-shadow: 0 10px 25px rgba(22, 34, 59, 0.12);
-  color: var(--ink);
+  background: linear-gradient(135deg, rgba(77, 131, 255, 0.24), rgba(71, 232, 255, 0.24));
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  color: #f7fbff;
   font-weight: 700;
-  border: 1px solid rgba(122, 168, 255, 0.2);
+  border: 1px solid rgba(79, 209, 255, 0.45);
 }
 
 .upload-btn:hover {
@@ -118,9 +119,10 @@ button:focus-visible {
 .ghost {
   padding: 10px 16px;
   border-radius: 12px;
-  background: white;
-  box-shadow: 0 10px 25px rgba(22, 34, 59, 0.12);
-  color: var(--ink);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
+  color: #f7fbff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .story-frame {
@@ -129,15 +131,29 @@ button:focus-visible {
   aspect-ratio: 9 / 16;
   border-radius: 32px;
   overflow: hidden;
-  background: linear-gradient(180deg, #f1f5ff 0%, #ffffff 70%);
-  box-shadow: 0 28px 80px rgba(22, 34, 59, 0.16);
+  background: radial-gradient(circle at 50% 35%, #13254f 0%, #0c1837 55%, #060f24 100%);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
   margin: 0 auto;
+  border: 1px solid rgba(79, 209, 255, 0.35);
+}
+
+.frame-title {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-weight: 700;
+  color: #e7f2ff;
+  letter-spacing: 0.04em;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  z-index: 5;
 }
 
 .backdrop {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 45%, rgba(122, 168, 255, 0.2), transparent 55%);
+  background: radial-gradient(circle at 50% 45%, rgba(124, 173, 255, 0.24), transparent 58%);
   z-index: 0;
 }
 
@@ -145,7 +161,8 @@ button:focus-visible {
   position: absolute;
   inset: 12%;
   border-radius: 50%;
-  border: 1px dashed rgba(122, 168, 255, 0.4);
+  border: 2px solid rgba(79, 209, 255, 0.35);
+  box-shadow: 0 0 0 10px rgba(124, 139, 255, 0.08), 0 0 32px rgba(79, 209, 255, 0.28);
   z-index: 1;
 }
 
@@ -156,7 +173,7 @@ button:focus-visible {
   left: 50%;
   top: 48%;
   transform: translate(-50%, -50%);
-  filter: drop-shadow(0 14px 36px rgba(68, 104, 185, 0.22));
+  filter: drop-shadow(0 14px 36px rgba(0, 0, 0, 0.35));
   z-index: 2;
   transition: transform 0.35s ease, filter 0.35s ease;
 }
@@ -173,11 +190,11 @@ button:focus-visible {
   top: 50%;
   width: var(--char-size);
   height: var(--char-size);
-  border-radius: 18px;
+  border-radius: 16px;
   background: linear-gradient(145deg, var(--tone-a), var(--tone-b));
-  color: var(--ink);
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+  color: #0a1022;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.28);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,14 +208,15 @@ button:focus-visible {
   --y: 0px;
   transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1);
   transition: transform var(--move-ms, 0.45s) ease, box-shadow 0.3s ease, opacity 0.3s ease,
-    width var(--move-ms, 0.45s) ease, height var(--move-ms, 0.45s) ease;
+    width var(--move-ms, 0.45s) ease, height var(--move-ms, 0.45s) ease, border-radius var(--move-ms, 0.45s) ease,
+    border-color 0.3s ease;
 }
 
 .char img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 12px;
+  border-radius: inherit;
 }
 
 .char .fallback {
@@ -209,7 +227,8 @@ button:focus-visible {
 
 .char:hover {
   transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.05);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.9);
 }
 
 .char::after {
@@ -230,17 +249,21 @@ button:focus-visible {
 
 .char.to-center {
   transform: translate(-50%, -50%) scale(1);
-  box-shadow: 0 18px 50px rgba(122, 168, 255, 0.4);
+  box-shadow: 0 18px 50px rgba(79, 209, 255, 0.5), 0 0 0 10px rgba(124, 139, 255, 0.2);
   z-index: 6;
   width: var(--focus-size);
   height: var(--focus-size);
-  border-radius: 22px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(79, 209, 255, 0.08)),
+    linear-gradient(145deg, var(--tone-a), var(--tone-b));
 }
 
 .char.hold {
   transform: translate(-50%, -50%) scale(1.04);
   width: var(--focus-size);
   height: var(--focus-size);
+  border-radius: 50%;
 }
 
 .char.returning {
@@ -253,17 +276,19 @@ button:focus-visible {
   bottom: 18px;
   transform: translateX(-50%);
   width: calc(100% - 48px);
-  background: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, rgba(20, 33, 69, 0.92), rgba(9, 16, 35, 0.92));
   border-radius: 18px;
   padding: 16px 18px 14px;
   box-shadow: var(--shadow);
   z-index: 5;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(79, 209, 255, 0.4);
 }
 
 .detail h2 {
   margin: 4px 0 6px;
   font-size: 20px;
+  color: #f7fbff;
 }
 
 .detail p {
@@ -277,14 +302,14 @@ button:focus-visible {
   letter-spacing: 0.12em;
   font-weight: 700;
   font-size: 11px;
-  color: #5f7bcf;
+  color: var(--accent);
   margin: 0;
 }
 
 .detail-count {
   margin-top: 8px;
   font-weight: 700;
-  color: var(--ink);
+  color: #f7fbff;
   font-size: 13px;
 }
 
@@ -298,10 +323,11 @@ button:focus-visible {
 }
 
 .howto {
-  background: white;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(124, 139, 255, 0.08));
   padding: 18px 20px;
   border-radius: 18px;
-  box-shadow: 0 16px 40px rgba(22, 34, 59, 0.14);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(79, 209, 255, 0.2);
 }
 
 .howto ol {
