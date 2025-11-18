@@ -26,7 +26,7 @@
     <section class="story-frame">
       <div class="backdrop"></div>
       <div class="ring"></div>
-      <img src="assets/pillow.svg" alt="Pillow" class="pillow" id="pillow" />
+      <img src="assets/pillow-center.svg" alt="Pillow" class="pillow" id="pillow" />
       <div id="characters" class="characters"></div>
       <article class="detail" id="detail">
         <p class="label">Now showing</p>
@@ -38,11 +38,11 @@
     </section>
 
     <section class="howto">
-      <h3>How to swap in your assets</h3>
+      <h3>How to drop your 20 poses</h3>
       <ol>
-        <li>Replace <code>assets/pillow.svg</code> with {{путь_к_изображению_подушки}} (keep it roughly 4:3 or 3:2 so it sits comfortably in the center).</li>
-        <li>In <code>script.js</code> update the <code>characters</code> array with {{пути_к_изображениям_персонажей}}. Ideal size: square-ish PNG/SVG, 200–320 px, consistent stroke/flat style.</li>
-        <li>For photo sources, run a quick vectorize/filter pass (e.g., "posterize" or "cartoon" filter) to keep everything in a soft, friendly style.</li>
+        <li>Put your 20 pose images into <code>assets/poses/pose-01.png</code> … <code>pose-20.png</code> (PNG/SVG, ~240–320 px square works best). Names are already wired to the ring.</li>
+        <li>The pillow in the middle uses <code>assets/pillow-center.svg</code>; replace that file with the provided pillow photo if you prefer.</li>
+        <li>Each pose auto-animates: ~0.5s move-in, ~0.5s hold, ~0.5s return, totaling ~30 seconds for the full circle. Toggle auto-play with the checkbox.</li>
       </ol>
     </section>
   </main>

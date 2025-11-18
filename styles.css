@@ -145,7 +145,6 @@ button:focus-visible {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
   width: 74px;
   height: 74px;
   border-radius: 18px;
@@ -162,6 +161,10 @@ button:focus-visible {
   line-height: 1.1;
   cursor: pointer;
   transform-origin: center;
+  --x: 0px;
+  --y: 0px;
+  transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1);
+  transition: transform var(--move-ms, 0.45s) ease, box-shadow 0.3s ease, opacity 0.3s ease;
 }
 
 .char img {
@@ -171,14 +174,10 @@ button:focus-visible {
   border-radius: 12px;
 }
 
-.char .emoji {
-  font-size: 30px;
-}
-
-.char .mini-label {
-  font-size: 11px;
-  color: rgba(22, 34, 59, 0.7);
-  font-weight: 600;
+.char .fallback {
+  font-weight: 800;
+  font-size: 16px;
+  color: #0f1d38;
 }
 
 .char:hover {
@@ -197,19 +196,23 @@ button:focus-visible {
   white-space: nowrap;
 }
 
-.char.faded {
-  opacity: 0.2;
+.char.dim {
+  opacity: 0.25;
   pointer-events: none;
 }
 
-.char.active {
-  left: 50%;
-  top: 50%;
-  width: 110px;
-  height: 110px;
-  transform: translate(-50%, -50%) scale(1.05);
+.char.to-center {
+  transform: translate(-50%, -50%) scale(1.12);
   box-shadow: 0 18px 50px rgba(122, 168, 255, 0.4);
   z-index: 6;
+}
+
+.char.hold {
+  transform: translate(-50%, -50%) scale(1.18);
+}
+
+.char.returning {
+  transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1);
 }
 
 .detail {

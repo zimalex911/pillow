@@ -1,89 +1,19 @@
-const characters = [
-  {
-    title: 'Lumbar lounge',
-    short: 'Back lay',
-    text: 'Lying down with pillow under the lower back for gentle support.',
-    icon: '🛌',
-    tones: ['#fbe4ff', '#d3b6ff'],
-  },
-  {
-    title: 'Desk support',
-    short: 'Chair sit',
-    text: 'Sitting on a chair with the pillow shaping posture.',
-    icon: '💺',
-    tones: ['#d7f4ff', '#b6d8ff'],
-  },
-  {
-    title: 'Head rest',
-    short: 'Head',
-    text: 'Classic head pillow use — soft cradle for the neck.',
-    icon: '🛏️',
-    tones: ['#fff4d6', '#ffd6a5'],
-  },
-  {
-    title: 'Side sleeper',
-    short: 'Side',
-    text: 'Sleeping on the side with an arm sliding under the pillow.',
-    icon: '🤗',
-    tones: ['#e1ffe4', '#c1ffd7'],
-  },
-  {
-    title: 'Car comfort',
-    short: 'Driver',
-    text: 'Driver/passenger using pillow in the car for lumbar relief.',
-    icon: '🚗',
-    tones: ['#e9f0ff', '#b8c9ff'],
-  },
-  {
-    title: 'Kiddo car nap',
-    short: 'Kid car',
-    text: 'Child snoozing in a car seat with cushy support.',
-    icon: '🧸',
-    tones: ['#ffe1e1', '#ffc0cb'],
-  },
-  {
-    title: 'Tent chill',
-    short: 'Camping',
-    text: 'Camping / tent vibe — pillow keeps the ground cozy.',
-    icon: '⛺',
-    tones: ['#e7ffd5', '#c8ef9d'],
-  },
-  {
-    title: 'Feeding helper',
-    short: 'Mom & baby',
-    text: 'New mom holding newborn — pillow supports baby on her lap.',
-    icon: '🤱',
-    tones: ['#ffe5f4', '#ffcce6'],
-  },
-  {
-    title: 'Reading nook',
-    short: 'Book',
-    text: 'Lounging with a book; pillow props elbows and neck.',
-    icon: '📖',
-    tones: ['#d9e5ff', '#b4c9ff'],
-  },
-  {
-    title: 'Meditation sit',
-    short: 'Zen',
-    text: 'Cross-legged seat with the pillow cushioning hips.',
-    icon: '🧘',
-    tones: ['#f2ffe6', '#d1ffb8'],
-  },
-  {
-    title: 'Laptop lapdesk',
-    short: 'Laptop',
-    text: 'Lightweight lapdesk feel for quick emails in bed.',
-    icon: '💻',
-    tones: ['#ffe8d6', '#ffd0a0'],
-  },
-  {
-    title: 'Travel snooze',
-    short: 'Travel',
-    text: 'Plane/train seat comfort with a compact pillow hug.',
-    icon: '✈️',
-    tones: ['#e3f1ff', '#c3dcff'],
-  },
-];
+const characters = Array.from({ length: 20 }).map((_, i) => {
+  const num = String(i + 1).padStart(2, '0');
+  return {
+    title: `Pose ${num}`,
+    short: `Pose ${num}`,
+    text: 'Drop your provided pose image into assets/poses and it will show here.',
+    image: `assets/poses/pose-${num}.svg`,
+    tones: [`hsl(${(i * 18) % 360} 80% 92%)`, `hsl(${(i * 18 + 35) % 360} 75% 82%)`],
+  };
+});
+
+const totalDemoDuration = 30000; // 30 seconds for full circle
+const perSlot = totalDemoDuration / characters.length;
+const moveDuration = perSlot / 3;
+const holdDuration = perSlot / 3;
+const returnDuration = perSlot - moveDuration - holdDuration;
 
 const circle = document.getElementById('characters');
 const detailTitle = document.getElementById('detailTitle');
@@ -96,6 +26,14 @@ const backdropBtn = document.getElementById('backdropBtn');
 let activeIndex = 0;
 let autoplay = true;
 let autoTimer;
+const stepTimers = [];
+const buttons = [];
+
+function clearStepTimers() {
+  while (stepTimers.length) {
+    clearTimeout(stepTimers.pop());
+  }
+}
 
 function placeCharacters() {
   const radius = 180;
@@ -111,70 +49,91 @@ function placeCharacters() {
     el.style.setProperty('--tone-b', char.tones[1]);
     el.dataset.index = index;
     el.dataset.short = char.short;
-    if (char.image) {
-      el.innerHTML = `<img src="${char.image}" alt="${char.title}" />`;
-    } else {
-      el.innerHTML = `<span class="emoji" aria-hidden="true">${char.icon}</span>`;
-    }
-    el.style.left = `calc(50% + ${x}px)`;
-    el.style.top = `calc(50% + ${y}px)`;
+
+    const img = document.createElement('img');
+    img.src = char.image;
+    img.alt = char.title;
+    img.loading = 'lazy';
+    img.onerror = () => {
+      img.replaceWith(Object.assign(document.createElement('span'), {
+        className: 'fallback',
+        textContent: `#${index + 1}`,
+      }));
+    };
+
+    el.appendChild(img);
     el.addEventListener('click', () => focusCharacter(index, true));
     circle.appendChild(el);
+    buttons.push(el);
   });
 }
 
 function updateDetail(index) {
   const char = characters[index];
   detailTitle.textContent = char.title;
-  detailText.textContent = char.text;
+  detailText.textContent = `Move-in: ${Math.round(moveDuration)}ms · Hold: ${Math.round(holdDuration)}ms · Return: ${Math.round(returnDuration)}ms (30s full loop).`;
   detailCount.textContent = `${index + 1} / ${characters.length}`;
 }
 
 function focusCharacter(index, userTriggered = false) {
   activeIndex = index;
-  document.querySelectorAll('.char').forEach((el, i) => {
-    el.classList.toggle('active', i === index);
-    el.classList.toggle('faded', i !== index);
-    if (i !== index) {
-      const x = el.style.getPropertyValue('--x');
-      const y = el.style.getPropertyValue('--y');
-      el.style.left = `calc(50% + ${x})`;
-      el.style.top = `calc(50% + ${y})`;
-    } else {
-      el.style.left = '50%';
-      el.style.top = '50%';
-    }
+  clearStepTimers();
+
+  buttons.forEach((el, i) => {
+    el.classList.toggle('dim', i !== index);
   });
-  document.querySelector('.pillow').style.transform = 'translate(-50%, -50%) scale(1)';
+
+  const target = buttons[index];
+  target.style.setProperty('--move-ms', `${moveDuration}ms`);
+  target.classList.add('to-center');
+  target.classList.remove('returning', 'hold');
   updateDetail(index);
+
+  // Hold state after moving in
+  stepTimers.push(setTimeout(() => {
+    target.classList.add('hold');
+  }, moveDuration));
+
+  // Start returning
+  stepTimers.push(setTimeout(() => {
+    target.style.setProperty('--move-ms', `${returnDuration}ms`);
+    target.classList.remove('hold', 'to-center');
+    target.classList.add('returning');
+    buttons.forEach((el) => el.classList.remove('dim'));
+  }, moveDuration + holdDuration));
+
+  // Cleanup return state
+  stepTimers.push(setTimeout(() => {
+    target.classList.remove('returning');
+  }, moveDuration + holdDuration + returnDuration));
+
   if (userTriggered && autoplay) {
     stopAuto();
   }
 }
 
 function resetView() {
-  document.querySelectorAll('.char').forEach((el) => {
-    const x = el.style.getPropertyValue('--x');
-    const y = el.style.getPropertyValue('--y');
-    el.classList.remove('active', 'faded');
-    el.style.left = `calc(50% + ${x})`;
-    el.style.top = `calc(50% + ${y})`;
+  clearStepTimers();
+  buttons.forEach((el) => {
+    el.classList.remove('to-center', 'hold', 'returning', 'dim');
+    el.style.removeProperty('--move-ms');
   });
   detailTitle.textContent = 'Pick a scene';
-  detailText.textContent = 'Tap around the clock to see how the pillow works for each person.';
+  detailText.textContent = 'Tap around the clock to see how each pose comes to the center.';
   detailCount.textContent = '';
-  document.querySelector('.pillow').style.transform = 'translate(-50%, -50%) scale(1.05)';
 }
 
 function startAuto() {
-  clearInterval(autoTimer);
+  stopAuto();
+  autoplay = true;
   autoTimer = setInterval(() => {
     activeIndex = (activeIndex + 1) % characters.length;
     focusCharacter(activeIndex);
-  }, 3200);
+  }, perSlot);
 }
 
 function stopAuto() {
+  autoplay = false;
   clearInterval(autoTimer);
 }
 
@@ -184,6 +143,7 @@ function init() {
   focusCharacter(0);
   startAuto();
 
+  autoToggle.checked = true;
   autoToggle.addEventListener('change', (e) => {
     autoplay = e.target.checked;
     if (autoplay) {
@@ -199,8 +159,8 @@ function init() {
   });
 
   backdropBtn.addEventListener('click', () => {
-    resetView();
     stopAuto();
+    resetView();
   });
 }
 
