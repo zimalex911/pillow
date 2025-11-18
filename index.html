@@ -21,6 +21,14 @@
         <label class="toggle"><input type="checkbox" id="autoToggle" checked> <span>Auto demo loop</span></label>
         <button id="resetBtn" class="ghost">Reset</button>
       </div>
+      <div class="uploads">
+        <label class="upload-btn">Load pillow image
+          <input type="file" id="pillowInput" accept="image/*" hidden>
+        </label>
+        <label class="upload-btn">Load 20 poses
+          <input type="file" id="poseInput" accept="image/*" multiple hidden>
+        </label>
+      </div>
     </header>
 
     <section class="story-frame">
@@ -40,9 +48,10 @@
     <section class="howto">
       <h3>How to drop your 20 poses</h3>
       <ol>
-        <li>Put your 20 pose images into <code>assets/poses/pose-01.png</code> … <code>pose-20.png</code> (PNG/SVG, ~240–320 px square works best). Names are already wired to the ring.</li>
-        <li>The pillow in the middle uses <code>assets/pillow-center.svg</code>; replace that file with the provided pillow photo if you prefer.</li>
-        <li>Each pose auto-animates: ~0.5s move-in, ~0.5s hold, ~0.5s return, totaling ~30 seconds for the full circle. Toggle auto-play with the checkbox.</li>
+        <li>Use the <strong>Load pillow image</strong> button above to pick the exact pillow photo you provided. It swaps instantly into the center.</li>
+        <li>Click <strong>Load 20 poses</strong>, select your twenty pose files at once (JPG/PNG/SVG). They load in filename order into the clock, glide to center for ~1s, hold for ~1s, then return — all within a 30s full loop.</li>
+        <li>If you prefer pre-wiring assets, drop them into <code>assets/poses/pose-01.ext</code> … <code>pose-20.ext</code> and your pillow into <code>assets/pillow-center.ext</code>; reload the page.</li>
+        <li>Toggle auto-play with the checkbox to pause/resume the sequence; Reset clears focus and stops the loop.</li>
       </ol>
     </section>
   </main>

@@ -1,13 +1,17 @@
-const characters = Array.from({ length: 20 }).map((_, i) => {
-  const num = String(i + 1).padStart(2, '0');
-  return {
-    title: `Pose ${num}`,
-    short: `Pose ${num}`,
-    text: 'Drop your provided pose image into assets/poses and it will show here.',
-    image: `assets/poses/pose-${num}.svg`,
-    tones: [`hsl(${(i * 18) % 360} 80% 92%)`, `hsl(${(i * 18 + 35) % 360} 75% 82%)`],
-  };
-});
+function buildDefaultCharacters() {
+  return Array.from({ length: 20 }).map((_, i) => {
+    const num = String(i + 1).padStart(2, '0');
+    return {
+      title: `Pose ${num}`,
+      short: `Pose ${num}`,
+      text: 'Drop your provided pose image into assets/poses and it will show here.',
+      image: `assets/poses/pose-${num}.svg`,
+      tones: [`hsl(${(i * 18) % 360} 80% 92%)`, `hsl(${(i * 18 + 35) % 360} 75% 82%)`],
+    };
+  });
+}
+
+let characters = buildDefaultCharacters();
 
 const totalDemoDuration = 30000; // 30 seconds for full circle
 const perSlot = totalDemoDuration / characters.length;
@@ -22,6 +26,9 @@ const detailCount = document.getElementById('detailCount');
 const autoToggle = document.getElementById('autoToggle');
 const resetBtn = document.getElementById('resetBtn');
 const backdropBtn = document.getElementById('backdropBtn');
+const pillowInput = document.getElementById('pillowInput');
+const poseInput = document.getElementById('poseInput');
+const pillowImg = document.getElementById('pillow');
 
 let activeIndex = 0;
 let autoplay = true;
@@ -37,6 +44,8 @@ function clearStepTimers() {
 
 function placeCharacters() {
   const radius = 180;
+  circle.innerHTML = '';
+  buttons.length = 0;
   characters.forEach((char, index) => {
     const angle = (index / characters.length) * Math.PI * 2 - Math.PI / 2;
     const x = Math.cos(angle) * radius;
@@ -73,6 +82,29 @@ function updateDetail(index) {
   detailTitle.textContent = char.title;
   detailText.textContent = `Move-in: ${Math.round(moveDuration)}ms · Hold: ${Math.round(holdDuration)}ms · Return: ${Math.round(returnDuration)}ms (30s full loop).`;
   detailCount.textContent = `${index + 1} / ${characters.length}`;
+}
+
+function applyPoseFiles(files) {
+  if (!files || !files.length) return;
+  stopAuto();
+  const sorted = Array.from(files).sort((a, b) => a.name.localeCompare(b.name)).slice(0, 20);
+  characters = buildDefaultCharacters();
+  sorted.forEach((file, idx) => {
+    const num = String(idx + 1).padStart(2, '0');
+    const url = URL.createObjectURL(file);
+    const label = file.name.replace(/\.[^.]+$/, '') || `Pose ${num}`;
+    characters[idx] = {
+      ...characters[idx],
+      title: label,
+      short: `Pose ${num}`,
+      text: 'Uploaded pose from your set.',
+      image: url,
+    };
+  });
+  placeCharacters();
+  resetView();
+  focusCharacter(0);
+  syncAuto();
 }
 
 function focusCharacter(index, userTriggered = false) {
@@ -137,20 +169,24 @@ function stopAuto() {
   clearInterval(autoTimer);
 }
 
+function syncAuto() {
+  if (autoToggle.checked) {
+    startAuto();
+  } else {
+    stopAuto();
+  }
+}
+
 function init() {
   placeCharacters();
   resetView();
   focusCharacter(0);
-  startAuto();
+  syncAuto();
 
   autoToggle.checked = true;
   autoToggle.addEventListener('change', (e) => {
     autoplay = e.target.checked;
-    if (autoplay) {
-      startAuto();
-    } else {
-      stopAuto();
-    }
+    syncAuto();
   });
 
   resetBtn.addEventListener('click', () => {
@@ -161,6 +197,17 @@ function init() {
   backdropBtn.addEventListener('click', () => {
     stopAuto();
     resetView();
+  });
+
+  pillowInput?.addEventListener('change', (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      pillowImg.src = URL.createObjectURL(file);
+    }
+  });
+
+  poseInput?.addEventListener('change', (e) => {
+    applyPoseFiles(e.target.files);
   });
 }
 

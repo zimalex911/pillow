@@ -13,8 +13,9 @@ Quick, vertical-friendly mini experience to showcase pillow use cases. Open `ind
 - Optional auto-demo loop for hands-free recording of smooth transitions.
 
 ## Swap in your assets
-- Replace `assets/pillow.svg` with your provided `{{путь_к_изображению_подушки}}`.
-- In `script.js`, swap the `icon` fields or add `image` URLs in the `characters` array for `{{пути_к_изображениям_персонажей}}`.
+- Click **Load pillow image** in the header to swap in your provided pillow photo instantly (no code edits needed).
+- Click **Load 20 poses** and select your 20 pose files at once; they flow into the ring in filename order and auto-animate through the 30s loop.
+- Prefer wiring files directly? Replace `assets/pillow-center.ext` and `assets/poses/pose-01.ext` … `pose-20.ext` with your supplied images, then reload the page.
 - Keep visuals flat/pastel for consistency; square-ish 200–320 px assets fit best in the clock.
 
 ## Run
