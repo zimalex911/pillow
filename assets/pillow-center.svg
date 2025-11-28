@@ -1,0 +1,25 @@
+<svg width="900" height="600" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="pillBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7FAFF" />
+      <stop offset="100%" stop-color="#E9F2FF" />
+    </linearGradient>
+    <linearGradient id="pillHighlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7AD3FF" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#3CB0FF" stop-opacity="0.9" />
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="900" height="600" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="28" flood-color="#4468B9" flood-opacity="0.24" />
+    </filter>
+    <pattern id="dots" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="2" fill="#C8D2E6" opacity="0.4" />
+    </pattern>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M120 140C120 118.386 137.386 101 159 101H741C762.614 101 780 118.386 780 140V460C780 481.614 762.614 499 741 499H159C137.386 499 120 481.614 120 460V140Z" fill="white"/>
+    <path d="M140 160C140 143.431 153.431 130 170 130H730C746.569 130 760 143.431 760 160V440C760 456.569 746.569 470 730 470H170C153.431 470 140 456.569 140 440V160Z" fill="url(#pillBody)" stroke="#00A3DC" stroke-width="8" rx="110"/>
+    <path d="M170 186C170 165.565 186.565 149 207 149H693C713.435 149 730 165.565 730 186C670 236 642 230 600 206C555 180 499 168 450 205C406 238 363 236 302 194C251 158 209 174 170 186Z" fill="url(#pillBody)"/>
+    <path d="M170 186C170 165.565 186.565 149 207 149H693C713.435 149 730 165.565 730 186C670 236 642 230 600 206C555 180 499 168 450 205C406 238 363 236 302 194C251 158 209 174 170 186Z" fill="url(#dots)" opacity="0.8"/>
+    <path d="M170 186C170 165.565 186.565 149 207 149H693C713.435 149 730 165.565 730 186C670 236 642 230 600 206C555 180 499 168 450 205C406 238 363 236 302 194C251 158 209 174 170 186Z" stroke="url(#pillHighlight)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

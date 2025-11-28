@@ -1,0 +1,21 @@
+<svg width="400" height="250" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="pillowSoft" x1="50" y1="0" x2="350" y2="250" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7F7FF"/>
+      <stop offset="1" stop-color="#E6ECFF"/>
+    </linearGradient>
+    <linearGradient id="pillowEdge" x1="0" y1="125" x2="400" y2="125" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#AEC8FF" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#7CA5FF" stop-opacity="0.5"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="400" height="250" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#9FB7FF" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <rect x="30" y="30" width="340" height="190" rx="70" fill="url(#pillowSoft)"/>
+    <rect x="30" y="30" width="340" height="190" rx="70" stroke="url(#pillowEdge)" stroke-width="6"/>
+    <ellipse cx="200" cy="90" rx="110" ry="40" fill="#FFFFFF" fill-opacity="0.6"/>
+    <ellipse cx="200" cy="160" rx="120" ry="45" fill="#E6ECFF" fill-opacity="0.7"/>
+  </g>
+</svg>

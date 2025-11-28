@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pillow Story Ring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Pillow comfort demo</p>
+        <h1>Tap any mini scene to spotlight it</h1>
+        <p class="sub">Optimized for vertical stories — soft colors, big touch targets, and smooth zooms.</p>
+      </div>
+      <div class="toggles">
+        <label class="toggle"><input type="checkbox" id="autoToggle" checked> <span>Auto demo loop</span></label>
+        <button id="resetBtn" class="ghost">Reset</button>
+      </div>
+      <div class="uploads">
+        <label class="upload-btn">Load pillow image
+          <input type="file" id="pillowInput" accept="image/*" hidden>
+        </label>
+        <label class="upload-btn">Load 20 poses
+          <input type="file" id="poseInput" accept="image/*" multiple hidden>
+        </label>
+      </div>
+    </header>
+
+    <section class="story-frame">
+      <p class="frame-title">Comfort is Always with you</p>
+      <div class="backdrop"></div>
+      <div class="ring"></div>
+      <img src="assets/pillow-center.svg" alt="Pillow" class="pillow" id="pillow" />
+      <div id="characters" class="characters"></div>
+      <article class="detail" id="detail">
+        <p class="label">Now showing</p>
+        <h2 id="detailTitle"></h2>
+        <p id="detailText"></p>
+        <div class="detail-count" id="detailCount"></div>
+      </article>
+      <button id="backdropBtn" class="backdrop-btn" aria-label="Close focus"></button>
+    </section>
+
+    <section class="howto">
+      <h3>How to drop your 20 poses</h3>
+      <ol>
+        <li>Use the <strong>Load pillow image</strong> button above to pick the exact pillow photo you provided. It swaps instantly into the center.</li>
+        <li>Click <strong>Load 20 poses</strong>, select your twenty pose files at once (JPG/PNG/SVG). They load in filename order into the clock, glide to center for ~1s, hold for ~1s, then return — all within a 30s full loop.</li>
+        <li>If you prefer pre-wiring assets, drop them into <code>assets/poses/pose-01.ext</code> … <code>pose-20.ext</code> and your pillow into <code>assets/pillow-center.ext</code>; reload the page.</li>
+        <li>Toggle auto-play with the checkbox to pause/resume the sequence; Reset clears focus and stops the loop.</li>
+      </ol>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
